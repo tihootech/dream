@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Setting;
 use App\BasePoint;
+use App\Trophy;
 
 class SettingsController extends Controller
 {
@@ -12,7 +13,11 @@ class SettingsController extends Controller
     {
         $base_points = BasePoint::all();
         $base_points []= new BasePoint;
-        return view('dashboard.settings', compact('base_points'));
+
+        $trophies = Trophy::all();
+        $trophies []= new Trophy;
+
+        return view('dashboard.settings', compact('base_points', 'trophies'));
     }
 
     public function update_time(Request $request)
@@ -34,5 +39,13 @@ class SettingsController extends Controller
         BasePoint::truncate();
         BasePoint::insert($data);
         return back()->withMessage("Base Points Updated");
+    }
+
+    public function update_trophies(Request $request)
+    {
+        $data = prepare_multiple($request->all());
+        Trophy::truncate();
+        Trophy::insert($data);
+        return back()->withMessage("Trophies Updated");
     }
 }

@@ -7,6 +7,8 @@ use App\Star;
 use App\Point;
 use App\BasePoint;
 use App\Master;
+use App\Award;
+use App\Setting;
 
 class GameController extends Controller
 {
@@ -22,16 +24,7 @@ class GameController extends Controller
         $year = $year ?? cy();
         $order = request('order') ?? cmn();
 
-        $query = "stars.*, SUM(points.amount) as sum";
-        for ($i=1; $i <=12 ; $i++) {
-            $query .= ", (SELECT SUM(IF(points.month=$i, points.amount, 0))) AS ". mn($i);
-        }
-        $stars = Star::select(\DB::raw($query))
-            ->where('year', $year)
-            ->leftJoin('points', 'points.star_id', '=', 'stars.id')
-            ->orderBy($order, 'DESC')
-            ->groupBy('stars.id')
-            ->get();
+        $stars = Star::tops($year, $order);
 
         return view('game.result', compact('stars'));
     }
@@ -39,6 +32,54 @@ class GameController extends Controller
     public function process()
     {
         return view('game.process');
+    }
+
+    public function next_month(Request $request)
+    {
+        $trophies = [
+            'Best Girl Of The Month', // 0
+            'Best Night Of The Month', // 1
+            'Golden Prix', // 2
+            'Silver Prix', // 3
+            'Bronze Prix', // 4
+            'Position Prix', // 5
+            'Position Prix', // 6
+            'Golden Rank', // 7
+            'Silver Rank', // 8
+            'Bronze Rank', // 9
+        ];
+
+        if (trophies_exist($trophies)) {
+
+            $request->validate([
+                'best_girl' => 'required|exists:stars,name',
+                'best_night' => 'required|exists:stars,name',
+            ]);
+
+            $best_girl = Star::where('name', $request->best_girl)->first();
+            $best_girl->assign_award($trophies[0]);
+
+            $best_night = Star::where('name', $request->best_night)->first();
+            $best_night->assign_award($trophies[1]);
+
+            $prixes = Star::tops(cy(), cmn(), 5);
+            $ranks = Star::tops(cy(), 'sum', 3);
+
+            foreach ($prixes as $i => $star) {
+                $star->assign_award($trophies[$i+2]);
+            }
+
+            foreach ($ranks as $i => $star) {
+                $star->assign_award($trophies[$i+7]);
+            }
+
+            Setting::next_month();
+
+            return redirect('prixes')->withMessage('Next month process completed.');
+
+        }else {
+            return back()->withError("Trophies Required : ". implode(',', $trophies))->withInput();
+        }
     }
 
     public function quick_plus(Request $request)
@@ -121,6 +162,11 @@ class GameController extends Controller
         }
     }
 
+    public function prixes()
+    {
+        $awards = Award::where('title', 'like', '%Prix')->orWhere('title', 'like', '%Rank')->get();
+        return view('game.prixes');
+    }
 
     public function events()
     {
