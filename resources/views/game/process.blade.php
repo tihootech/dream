@@ -1,13 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    <title> Events </title>
+    <title> Process </title>
 @endsection
 
 @section('main')
-
     <div class="card card-body">
-        @include('tables.stars')
+        ss
     </div>
-    
 @endsection

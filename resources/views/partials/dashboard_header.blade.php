@@ -30,7 +30,7 @@
                                     <a href="{{route('result')}}" class="connection-item"><span> Result </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><span> Shortcut </span></a>
+                                    <a href="{{route('process')}}" class="connection-item"><span> Process </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                     <a href="#" class="connection-item"><span> Shortcut </span></a>
@@ -41,15 +41,12 @@
                                     <a href="{{route('events')}}" class="connection-item"> Events </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"> Shortcut </span></a>
+                                    <a href="{{url('stars')}}" class="connection-item"> Stars </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                     <a href="#" class="connection-item"><span> Shortcut </span></a>
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="conntection-footer"><a href="{{url('home')}}"> Dashboard </a></div>
                         </li>
                     </ul>
                 </li>

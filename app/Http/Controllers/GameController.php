@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Star;
 use App\Point;
+use App\BasePoint;
+use App\Master;
 
 class GameController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        $stars = Star::where('name', 'like', "%$request->ps%")->get();
+        return redirect('home')->withStars($stars);
+    }
+
     public function result($year=null)
     {
         $year = $year ?? cy();
@@ -25,6 +34,11 @@ class GameController extends Controller
             ->get();
 
         return view('game.result', compact('stars'));
+    }
+
+    public function process()
+    {
+        return view('game.process');
     }
 
     public function quick_plus(Request $request)
@@ -87,6 +101,24 @@ class GameController extends Controller
         }
 
         return redirect('home')->withMessages($messages);
+    }
+
+    public function master(Request $request)
+    {
+        if (base_point_exists('master')) {
+            $request->validate([
+                'star' => 'exists:stars,name',
+                'degree' => 'numeric|min:1|max:6',
+            ]);
+            $star = Star::where('name', $request->star)->first();
+            Master::make($star->id, $request->degree);
+            $star->assign_points($request->degree, 'master');
+            $point = Point::latest()->first();
+            $message = "You masterbated on $star->name with degree of $request->degree and she gained ".nf($point->amount)." points.";
+            return back()->withMessage($message);
+        }else {
+            return back()->withError('Base Point "master" does not exist');
+        }
     }
 
 

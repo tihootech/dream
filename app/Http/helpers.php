@@ -36,6 +36,11 @@ function nf($number)
     return is_numeric($number) ? number_format($number) : null;
 }
 
+function base_point_exists($type)
+{
+    return (bool) App\BasePoint::where('type', $type)->first();
+}
+
 function prepare_multiple($inputs)
 {
     $result = [];

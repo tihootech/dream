@@ -11,8 +11,11 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::resource('stars', 'StarController');
 
 // game
+Route::get('search', 'GameController@search')->name('search');
+Route::get('process', 'GameController@process')->name('process');
 Route::post('stars/quick_add', 'GameController@quick_add')->name('quick_add');
 Route::post('stars/quick_plus', 'GameController@quick_plus')->name('quick_plus');
+Route::post('master', 'GameController@master')->name('master');
 Route::get('result/{year?}', 'GameController@result')->name('result');
 Route::get('events', 'GameController@events')->name('events');
 Route::get('points/delete/{point}', 'GameController@delete_point');
