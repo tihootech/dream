@@ -1,9 +1,24 @@
 <?php
 
+// laravel defaults
 Route::redirect('/','login');
-
-
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// resource
+Route::resource('stars', 'StarController');
+
+// game
+Route::post('stars/quick_add', 'GameController@quick_add')->name('quick_add');
+Route::post('stars/quick_plus', 'GameController@quick_plus')->name('quick_plus');
+Route::get('result/{year?}', 'GameController@result')->name('result');
+Route::get('events', 'GameController@events')->name('events');
+Route::get('points/delete/{point}', 'GameController@delete_point');
+Route::get('points/{point}/edit', 'GameController@edit_point');
+
+// settings
+Route::get('settings', 'SettingsController@edit')->name('settings');
+Route::put('settings/time', 'SettingsController@update_time')->name('update_time');
+Route::put('settings/base_point', 'SettingsController@update_base_points')->name('update_base_points');

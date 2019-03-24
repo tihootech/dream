@@ -172,7 +172,7 @@ h4,
 h5,
 h6 {
     color: #3d405c;
-    margin: 0px 0px 15px 0px;
+    margin: 0;
     font-family: 'Circular Std Medium';
 }
 
@@ -1238,8 +1238,7 @@ Top Header
     line-height: inherit;
     white-space: nowrap;
     padding: 11px 20px;
-    font-size: 30px;
-    text-transform: uppercase;
+    font-size: 20px;
     font-weight: 700;
     color: #007bff;
 }
@@ -1943,7 +1942,7 @@ Container / Wrapper
 .dashboard-wrapper {
     position: relative;
     left: 0;
-    margin-left: 264px;
+    /* margin-left: 264px; */
     min-height: 870px !important;
 }
 
@@ -4137,6 +4136,10 @@ Pills vertical
 /*-----------------------
 2.14 Pagination
 -------------------------*/
+
+.center-pagination .pagination {
+    justify-content: center;
+}
 
 .page-link {
     position: relative;

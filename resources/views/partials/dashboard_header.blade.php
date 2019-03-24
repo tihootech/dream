@@ -1,6 +1,9 @@
 <div class="dashboard-header">
     <nav class="navbar navbar-expand-lg bg-white fixed-top">
-        <a class="navbar-brand" href="{{url('home')}}"> Dream </a>
+        <a class="navbar-brand" href="#">
+            <small class="mx-2 text-info text-capitalize"> Current Month : {{cm()}} - {{cmn()}} </small>
+            <small class="mx-2 text-success"> Current Year : {{cy()}} </small>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,13 +17,17 @@
                     </div>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('home')}}"> <i class="fas fa-fw fa-home"></i> </a>
+                </li>
+
                 <li class="nav-item dropdown connection">
                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
                     <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
                         <li class="connection-list">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><span> Shortcut </span></a>
+                                    <a href="{{route('result')}}" class="connection-item"><span> Result </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                     <a href="#" class="connection-item"><span> Shortcut </span></a>
@@ -31,7 +38,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"> Shortcut </span></a>
+                                    <a href="{{route('events')}}" class="connection-item"> Events </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                     <a href="#" class="connection-item"> Shortcut </span></a>
@@ -47,7 +54,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown nav-user">
-                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="user" class="user-avatar-md rounded-circle"></a>
+                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{asset('assets/images/avatar-1.jpg')}}" alt="user" class="user-avatar-md rounded-circle"></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                         <a class="dropdown-item" href="{{url('settings')}}"><i class="fas fa-cog mr-2"></i>Setting</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

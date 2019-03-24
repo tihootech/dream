@@ -7,6 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="shortcut icon" href="{{asset('assets/images/favicon.jpg')}}">
+
     @yield('title')
 
     <!-- Bootstrap CSS -->
@@ -30,13 +32,60 @@
     <div class="dashboard-main-wrapper">
 
         @include('partials.dashboard_header')
-        @include('partials.dashboard_left_nav')
+        {{-- @include('partials.dashboard_left_nav') --}}
 
         <div class="dashboard-wrapper">
 
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content ">
                     <div class="ecommerce-widget">
+
+                        @if (session('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Successful!</strong> {{session('message')}}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong> Error!</strong> {{session('error')}}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if (session('messages'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Successful!</strong> Followings Happened :
+                                <hr>
+                                <ul>
+                                    @foreach (session('messages') as $message)
+                                        <li> {{$message}} </li>
+                                    @endforeach
+                                </ul>
+
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong> Error! </strong> Followings Happened :
+                                <hr>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li> {{$error}} </li>
+                                    @endforeach
+                                </ul>
+
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
 
                         @yield('main')
 
