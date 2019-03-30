@@ -1,5 +1,24 @@
 <?php
 
+Route::get('test/{name}', function ($name) {
+    $star = App\Star::where('name', $name)->first();
+    $cm = cm();
+    if ($star->details && $star->details->id) {
+        $points = \DB::table('old_points')->where('star_id', $star->details->id)->get();
+        dd($points->sum('amount'));
+        foreach ($points as $point) {
+            $data = [
+                'star_id' => $star->id,
+                'amount' => $point->amount,
+                'month' => $cm,
+                'year' => 1,
+            ];
+            App\Point::create($data);
+        }
+    }
+    dd('done');
+});
+
 // laravel defaults
 Route::redirect('/','login');
 Route::get('home', 'HomeController@index')->name('home');

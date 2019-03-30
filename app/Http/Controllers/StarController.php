@@ -14,6 +14,11 @@ class StarController extends Controller
         return view('stars.index', compact('stars'));
     }
 
+    public function show(Star $star)
+    {
+        return view('stars.show', compact('star'));
+    }
+
     public function edit(Star $star)
     {
         return view('stars.edit', compact('star'));

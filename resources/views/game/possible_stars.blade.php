@@ -14,6 +14,7 @@
             <form class="row" action="{{route('quick_plus')}}" method="post">
                 @csrf
                 <input type="hidden" name="string" value="{{$string}}">
+                <input type="hidden" name="type" value="{{$type}}">
 
                 @foreach ($possible_stars as $star)
                     <button type="submit" name="name" value="{{$star->name}}" class="btn btn-warning m-1">

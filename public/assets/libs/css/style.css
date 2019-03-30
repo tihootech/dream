@@ -6974,8 +6974,10 @@ Media Query
     padding: 17px 29px;}
 }
 
-
-
+div.bootstrap-select {
+    display: block !important;
+    /* width: 100% !important; */
+}
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}

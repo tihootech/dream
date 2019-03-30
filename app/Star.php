@@ -9,6 +9,20 @@ class Star extends Model
 
     protected $guarded = ['id'];
 
+    public static function nfind($name)
+    {
+        return self::where('name', $name)->first();
+    }
+
+    public function awards()
+    {
+        return $this->hasMany(Award::class);
+    }
+
+    public function details()
+    {
+        return $this->hasOne(Detail::class, 'name', 'name');
+    }
 
     // order is month name or sum
     public static function tops($year=null, $order='sum', $limit=null)
@@ -55,7 +69,8 @@ class Star extends Model
         }
         $sum = 0;
         foreach ($numbers as $number) {
-            $sum += $amount = BasePoint::get_for($number, $type);
+            $amount = BasePoint::get_for($number, $type);
+            $sum += $amount;
             $point = new Point;
             $point->star_id = $this->id;
             $point->amount = $amount;

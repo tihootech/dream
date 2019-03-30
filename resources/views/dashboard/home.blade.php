@@ -23,11 +23,19 @@
                         @csrf
 
                         <div class="form-group col-md-9">
-                            <label for="string"> Star, Regular, Cloth, Kid </label>
-                            <input type="text" name="string" class="form-control form-control-lg" id="string" value="{{old('string')}}" autocomplete="off">
+                            <label for="string"> Star, Points, Cloth, Kid </label>
+                            <input type="text" name="string" class="form-control form-control-lg mb-2" id="string" value="{{old('string')}}" autocomplete="off">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1" name="type" class="custom-control-input" value="regular" checked>
+                                <label class="custom-control-label" for="customRadioInline1"> regular </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline2" name="type" class="custom-control-input" value="instagram" @if(old('type') == 'instagram') checked @endif>
+                                <label class="custom-control-label" for="customRadioInline2"> instagram </label>
+                            </div>
                         </div>
 
-                        <div class="col-md-3 mx-auto align-self-center">
+                        <div class="col-md-3 align-self-center">
                             <button type="submit" class="btn btn-primary btn-block mt-2"> Submit </button>
                         </div>
 
@@ -69,14 +77,19 @@
                     <form class="row" action="{{route('quick_add')}}" method="post">
                         @csrf
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-6">
                             <label for="star"> Star </label>
                             <input type="text" name="star" class="form-control" id="star">
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="kids"> Kids </label>
                             <input type="text" name="kids" class="form-control" id="kids" autocomplete="off">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="cloth"> Cloth </label>
+                            <input type="text" name="cloth" class="form-control" id="cloth" autocomplete="off">
                         </div>
 
                         <div class="form-group col-12">

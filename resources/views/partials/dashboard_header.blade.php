@@ -18,11 +18,17 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('home')}}"> <i class="fas fa-fw fa-home"></i> </a>
+                    <a class="nav-link" href="{{url('home')}}" title="Home" data-toggle="tooltip"> <i class="fas fa-fw fa-home"></i> </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('result')}}" title="Result" data-toggle="tooltip"> <i class="fas fa-fw fa-list"></i> </a>
                 </li>
 
                 <li class="nav-item dropdown connection">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
+                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                        <i class="fas fa-fw fa-th"></i>
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
                         <li class="connection-list">
                             <div class="row">
@@ -33,7 +39,7 @@
                                     <a href="{{route('process')}}" class="connection-item"><span> Process </span></a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><span> Shortcut </span></a>
+                                    <a href="{{route('prixes')}}" class="connection-item"><span> Prixes </span></a>
                                 </div>
                             </div>
                             <div class="row">

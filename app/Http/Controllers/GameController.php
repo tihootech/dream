@@ -88,12 +88,13 @@ class GameController extends Controller
         $data = explode(',', $string);
 
         $name = $request->name ?? $data[0];
-        $regular = $data[1] ?? null;
-        $cloth = $data[2] ?? null;
+        $type = $request->type;
+        $points = $data[1] ?? 0;
+        $cloth = $data[2] ?? 0;
         $kid = $data[3] ?? null;
 
-        if (!$regular) {
-            return redirect('home')->withError("Please provide regular points")->withInput();
+        if (!$points) {
+            return redirect('home')->withError("Please provide points")->withInput();
         }
 
         $possible_stars = Star::where('name', 'like', "%$name%")->get();
@@ -103,16 +104,16 @@ class GameController extends Controller
             return redirect('home')->withError("Nothing found")->withInput();
         }
         if ($count > 1) {
-            return view('game.possible_stars', compact('possible_stars', 'string'));
+            return view('game.possible_stars', compact('possible_stars', 'string', 'type'));
         }
         if ($count == 1) {
             $star = $possible_stars->first();
             $messages []= "Your string was : $string";
-            if ($regular > 0) {
-                $sum = $star->assign_points($regular);
-                $messages []= "$sum added for $star->name as regular";
+            if ($points > 0) {
+                $sum = $star->assign_points($points, $type);
+                $messages []= "$sum added for $star->name as $type";
             }
-            if ($cloth) {
+            if ($cloth > 0) {
                 $sum = $star->assign_points($cloth, 'cloth');
                 $messages []= "$sum added for $star->name as cloth";
             }
@@ -120,7 +121,7 @@ class GameController extends Controller
                 $sum = $star->assign_points($kid, 'kid');
                 $messages []= "$sum added for $star->name as kid";
             }
-            return redirect('home')->withMessages($messages);
+            return redirect('home')->withMessages($messages)->withInput(compact('type'));
         }
 
     }
@@ -135,6 +136,10 @@ class GameController extends Controller
         if ($request->points) {
             $sum = $star->assign_points($request->points);
             $messages []= nf($sum)." points added for $star->name as regular";
+        }
+        if ($request->cloth) {
+            $sum = $star->assign_points($request->cloth, 'cloth');
+            $messages []= nf($sum)." points added for $star->name as cloth";
         }
         if ($request->kids) {
             $sum = $star->assign_points($request->kids, 'kid');
