@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Star extends Model
 {
@@ -22,6 +23,17 @@ class Star extends Model
     public function details()
     {
         return $this->hasOne(Detail::class, 'name', 'name');
+    }
+
+    public function rank($type)
+    {
+        return 1; // TODO: return real rank
+    }
+
+    public function age()
+    {
+        $birthday = $this->details->birthday ?? null;
+        return $birthday ? Carbon::parse($birthday)->age : 0;
     }
 
     // order is month name or sum

@@ -24,7 +24,7 @@
 
                         <div class="form-group col-md-9">
                             <label for="string"> Star, Points, Cloth, Kid </label>
-                            <input type="text" name="string" class="form-control form-control-lg mb-2" id="string" value="{{old('string')}}" autocomplete="off">
+                            <input type="text" name="string" class="form-control form-control-lg mb-2" id="string" value="{{old('string')}}" autocomplete="off" autofocus>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="customRadioInline1" name="type" class="custom-control-input" value="regular" checked>
                                 <label class="custom-control-label" for="customRadioInline1"> regular </label>

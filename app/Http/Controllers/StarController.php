@@ -33,4 +33,11 @@ class StarController extends Controller
         return redirect('stars')->withMessage("Star Updated");
     }
 
+    public function destroy(Star $star)
+    {
+        $star->delete();
+        \DB::table('points')->where('star_id', $star->id)->delete();
+        return back()->withMessage('Only the star herself and her points deleted.');
+    }
+
 }

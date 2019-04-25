@@ -31,6 +31,23 @@ function month_color($number)
     }
 }
 
+function color($number)
+{
+    if ($number == 1) {
+        return 'warning';
+    }
+    if ($number <= 3) {
+        return 'primary';
+    }
+    if ($number <= 10) {
+        return 'success';
+    }
+    if ($number <= 20) {
+        return 'info';
+    }
+    return 'dark';
+}
+
 function nf($number)
 {
     return is_numeric($number) ? number_format($number) : null;

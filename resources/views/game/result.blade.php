@@ -22,7 +22,7 @@
             <tbody>
                 @foreach ($stars as $i => $star)
                     <tr>
-                        <th scope="row">{{$i+1}}</th>
+                        <th scope="row" class="text-{{color($i+1)}}">{{$i+1}}</th>
                         <td> <a href="{{url("stars/$star->id")}}"> {{$star->name}} </a> </td>
                         @for ($i=1; $i <= 12; $i++)
                             @php $month = mn($i); @endphp
