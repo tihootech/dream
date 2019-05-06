@@ -9,6 +9,8 @@ use App\BasePoint;
 use App\Master;
 use App\Award;
 use App\Setting;
+use App\Competition;
+use App\Winner;
 
 class GameController extends Controller
 {
@@ -32,6 +34,51 @@ class GameController extends Controller
     public function process()
     {
         return view('game.process');
+    }
+
+    public function competition($year=null, Request $request)
+    {
+        if(!$year) $year = cy();
+        $change = $request->change;
+        $competitions = Competition::all();
+        $result = [];
+        foreach ($competitions as $competition) {
+            $result[$competition->id]= Winner::where('year', $year)->where('competition_id', $competition->id)->orderBy('rank')->get();
+        }
+        return view('game.competition', compact('competitions', 'result', 'change', 'year'));
+    }
+
+    public function save_competition(Request $request)
+    {
+        $request->validate([
+            'year' => 'required|integer',
+            'competition_id' => 'required|exists:competitions,id',
+            'rank.*' => 'required|exists:stars,name',
+        ]);
+        $competition = Competition::find($request->competition_id);
+        foreach ($request->rank as $rank => $name) {
+
+            $data = [];
+            $star = Star::nfind($name);
+            $data['star_id'] = $star->id;
+            $data['competition_id'] = $competition->id;
+            $data['year'] = $request->year;
+            $data['rank'] = $rank;
+            $data['points'] = $competition->base * (12/$rank) * 2500;
+            $data['money'] = $competition->base * (12/$rank) * 10000;
+
+            if ($request->points) {
+                $star->assign_points($data['points'], 'competition');
+            }
+
+            if ($winner = $competition->winner($rank,$request->year)) {
+                $winner->update($data);
+            }else {
+                Winner::create($data);
+            }
+
+        }
+        return redirect('competition')->withMessage('Changes Saved');
     }
 
     public function next_month(Request $request)
@@ -194,5 +241,17 @@ class GameController extends Controller
         }else {
             return view('game.edit_point', compact('point'));
         }
+    }
+
+    public function sync($name)
+    {
+        $star = Star::where('name', $name)->first();
+        $cm = cm();
+        if ($star && $star->details && $star->details->id) {
+            $points = \DB::table('old_points')->where('star_id', $star->details->id)->get();
+            $sum = $points->sum('amount');
+            return redirect('home')->withMessage("Points to sync for $star->name : $sum");
+        }
+        return redirect('home')->withMessage("Nothing to sync");
     }
 }

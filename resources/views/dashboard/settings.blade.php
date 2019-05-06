@@ -63,6 +63,36 @@
                     </form>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    Update Competitions
+                </div>
+                <div class="card-body">
+                    <form class="row" action="{{route('update_competitions')}}" method="post">
+                        @csrf
+                        @method('PUT')
+
+                        @foreach ($competitions as $i => $competition)
+
+                            <div class="form-group col-md-6">
+                                <label for="name-{{$i}}"> Name </label>
+                                <input type="text" name="name[]" class="form-control" id="name-{{$i}}" value="{{$competition->name}}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="base-{{$i}}"> Base </label>
+                                <input type="text" name="base[]" class="form-control" id="base-{{$i}}" value="{{$competition->base}}">
+                            </div>
+
+                            <div class="w-100"></div>
+                        @endforeach
+
+                        <div class="col-md-4 align-self-center mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block mt-2"> Update Competitions </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="card">
@@ -75,7 +105,7 @@
                         @method('PUT')
 
                         @foreach ($trophies as $i => $trophy)
-                                                        
+
                             <div class="form-group col-md-6">
                                 <label for="title-{{$i}}"> Title </label>
                                 <input type="text" name="title[]" class="form-control" id="title-{{$i}}" value="{{$trophy->title}}">

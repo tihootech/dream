@@ -5,8 +5,8 @@
 @endsection
 
 @section('main')
-    <div class="card card-body">
-        <table class="table table-bordered table-hover">
+    <div class="card card-body p-0">
+        <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>

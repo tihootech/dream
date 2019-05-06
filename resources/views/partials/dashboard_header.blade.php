@@ -3,6 +3,7 @@
         <a class="navbar-brand" href="#">
             <small class="mx-2 text-info text-capitalize"> Current Month : {{cm()}} - {{cmn()}} </small>
             <small class="mx-2 text-success"> Current Year : {{cy()}} </small>
+            <small class="mx-2 text-danger"> This Month : {{nf(get_points(cm(),cy()))}} </small>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,24 +34,42 @@
                         <li class="connection-list">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{route('result')}}" class="connection-item"><span> Result </span></a>
+                                    <a href="{{route('competition')}}" class="connection-item">
+                                        <i class="fa fa-car d-block"></i>
+                                        Compt
+                                    </a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{route('process')}}" class="connection-item"><span> Process </span></a>
+                                    <a href="{{route('process')}}" class="connection-item">
+                                        <i class="fa fa-sync d-block"></i>
+                                        Process
+                                    </a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{route('prixes')}}" class="connection-item"><span> Prixes </span></a>
+                                    <a href="{{route('prixes')}}" class="connection-item">
+                                        <i class="fa fa-th-list d-block"></i>
+                                        Prixes
+                                    </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{route('events')}}" class="connection-item"> Events </span></a>
+                                    <a href="{{route('events')}}" class="connection-item">
+                                        <i class="fa fa-folder-open d-block"></i>
+                                        Events
+                                    </a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{url('stars')}}" class="connection-item"> Stars </span></a>
+                                    <a href="{{url('stars')}}" class="connection-item">
+                                        <i class="fa fa-star d-block"></i>
+                                        Stars
+                                    </a>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="{{url('awards')}}" class="connection-item"> Awards </span></a>
+                                    <a href="{{url('awards')}}" class="connection-item">
+                                        <i class="fa fa-trophy d-block"></i>
+                                        Awards
+                                    </a>
                                 </div>
                             </div>
                         </li>

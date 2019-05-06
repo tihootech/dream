@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Setting;
 use App\BasePoint;
 use App\Trophy;
+use App\Competition;
 
 class SettingsController extends Controller
 {
@@ -17,7 +18,10 @@ class SettingsController extends Controller
         $trophies = Trophy::all();
         $trophies []= new Trophy;
 
-        return view('dashboard.settings', compact('base_points', 'trophies'));
+        $competitions = Competition::all();
+        $competitions []= new Competition;
+
+        return view('dashboard.settings', compact('base_points', 'trophies', 'competitions'));
     }
 
     public function update_time(Request $request)
@@ -47,5 +51,13 @@ class SettingsController extends Controller
         Trophy::truncate();
         Trophy::insert($data);
         return back()->withMessage("Trophies Updated");
+    }
+
+    public function update_competitions(Request $request)
+    {
+        $data = prepare_multiple($request->all());
+        Competition::truncate();
+        Competition::insert($data);
+        return back()->withMessage("Competitions Updated");
     }
 }

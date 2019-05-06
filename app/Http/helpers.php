@@ -48,9 +48,30 @@ function color($number)
     return 'dark';
 }
 
+function rank_color($number)
+{
+    if ($number == 1) {
+        return 'warning text-dark';
+    }
+    if ($number == 2) {
+        return 'primary';
+    }
+    if ($number == 3) {
+        return 'success text-light';
+    }
+    if ($number == 4) {
+        return 'secondary';
+    }
+}
+
 function nf($number)
 {
     return is_numeric($number) ? number_format($number) : null;
+}
+
+function get_points($month,$year)
+{
+    return \DB::table('points')->where('month', $month)->where('year', $year)->sum('amount');
 }
 
 function base_point_exists($type)
