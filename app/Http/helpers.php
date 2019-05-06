@@ -112,3 +112,21 @@ function prepare_multiple($inputs)
     }
     return $result;
 }
+
+
+function money_for_award($title)
+{
+    $award = \App\Award::where('title', $title)->first();
+    return $award ? $award->money : 0;
+}
+
+function sort_prixes($arr) {
+    array_multisort(
+        array_column($arr, 'golds'), SORT_DESC,
+        array_column($arr, 'silvers'), SORT_DESC,
+        array_column($arr, 'bronzes'), SORT_DESC,
+        array_column($arr, 'positions'), SORT_DESC,
+        $arr
+    );
+    return $arr;
+}

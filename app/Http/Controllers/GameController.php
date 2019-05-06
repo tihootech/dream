@@ -214,10 +214,46 @@ class GameController extends Controller
         }
     }
 
-    public function prixes()
+    public function prixes($year=null)
     {
-        $awards = Award::where('title', 'like', '%Prix')->orWhere('title', 'like', '%Rank')->get();
-        return view('game.prixes');
+        $year = $year ?? cy();
+
+        // grand prix result
+        $stars = Star::all();
+        $result = [];
+        foreach ($stars as $star) {
+            $golds = Award::where('title','Golden Prix')->where('star_id', $star->id)->where('year', $year)->count();
+            $silvers = Award::where('title','Silver Prix')->where('star_id', $star->id)->where('year', $year)->count();
+            $bronzes = Award::where('title','Bronze Prix')->where('star_id', $star->id)->where('year', $year)->count();
+            $positions = Award::where('title','Position Prix')->where('star_id', $star->id)->where('year', $year)->count();
+            $money =
+                ($golds * money_for_award('Golden Prix')) +
+                ($silvers * money_for_award('Silver Prix')) +
+                ($bronzes * money_for_award('Bronze Prix')) +
+                ($positions * money_for_award('Position Prix'));
+            $result[$star->id]['star'] = $star->name;
+            $result[$star->id]['golds'] = $golds;
+            $result[$star->id]['silvers'] = $silvers;
+            $result[$star->id]['bronzes'] = $bronzes;
+            $result[$star->id]['positions'] = $positions;
+            $result[$star->id]['money'] = $money;
+        }
+        $result = sort_prixes($result);
+        $rank = 1;
+        for ($i=0; $i < count($result) ; $i++) {
+            $result[$i]['rank'] = $rank;
+            if (isset($result[$i+1]) && $result[$i]['money'] != $result[$i+1]['money']) {
+                $rank = $i+2;
+            }
+        }
+
+        // get prixes with points
+        $prxies = [];
+        for ($i=1; $i < cm() ; $i++) {
+            $prixes_list [mn($i)]= Star::tops($year, mn($i), 5);
+        }
+
+        return view('game.prixes', compact('prixes_list', 'result'));
     }
 
     public function events()

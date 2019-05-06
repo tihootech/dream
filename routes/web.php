@@ -24,7 +24,7 @@ Route::get('result/{year?}', 'GameController@result')->name('result');
 Route::get('events', 'GameController@events')->name('events');
 Route::get('points/delete/{point}', 'GameController@delete_point');
 Route::get('points/{point}/edit', 'GameController@edit_point');
-Route::get('prixes', 'GameController@prixes')->name('prixes');
+Route::get('prixes/{year?}', 'GameController@prixes')->name('prixes');
 Route::get('sync/{name}', 'GameController@sync');
 
 
