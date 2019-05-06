@@ -270,8 +270,9 @@ class GameController extends Controller
 
     public function edit_point(Point $point, Request $request)
     {
-        if ($new_amount = $request->new_amount) {
-            $point->amount = $new_amount;
+        if ($request->update) {
+            $point->amount = $request->new_amount;
+            $point->type = $request->new_type;
             $point->save();
             return redirect('events')->withMessage('Point edited');
         }else {
