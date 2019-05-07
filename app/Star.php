@@ -25,9 +25,22 @@ class Star extends Model
         return $this->hasOne(Detail::class, 'name', 'name');
     }
 
+    public function recent_points()
+    {
+        return $this->hasMany(Point::class)->latest()->take(20);
+    }
+
     public function rank($type)
     {
-        return 1; // TODO: return real rank
+        $tops = [];
+        if ($type=='month') {
+            $tops = self::tops(cy(), mn(cm()))->toArray();
+        }
+        if ($type=='year') {
+            $tops = self::tops()->toArray();
+        }
+        $key = array_search($this->id, array_column($tops, 'id'));
+        return $key+1;
     }
 
     public function age()

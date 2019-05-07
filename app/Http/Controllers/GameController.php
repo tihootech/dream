@@ -256,9 +256,13 @@ class GameController extends Controller
         return view('game.prixes', compact('prixes_list', 'result'));
     }
 
-    public function events()
+    public function events(Request $request)
     {
-        $points = Point::latest()->paginate(50);
+        $points = Point::query();
+        if ($sid = $request->sid) {
+            $points = $points->where('star_id', $sid);
+        }
+        $points = $points->latest()->paginate(50);
         return view('game.events', compact('points'));
     }
 

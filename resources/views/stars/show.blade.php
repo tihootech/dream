@@ -6,7 +6,7 @@
 
 @section('main')
     <div class="card card-body">
-        <div class="row">
+        <div class="row justify-conent-center">
             <div class="col-md-4">
                 <div class="card">
                     <img class="img-fluid" src="../assets/images/card-img.jpg" alt="Card image cap">
@@ -26,14 +26,24 @@
                         </li>
                         <li class="list-group-item"> Height : {{$star->details->height ?? '-'}}cm </li>
                     </ul>
-                    {{-- <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div> --}}
+                    <div class="card-body">
+                        <a href="{{url("stars/$star->id/edit")}}" class="card-link text-success"> <i class="fa fa-edit mr-1"></i> Edit </a>
+                        <form class="d-inline" action="{{url("stars/$star->id")}}" method="post" onsubmit="return confirm('Are you sure?');">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-link text-danger">
+                                <i class="fa fa-trash mr-1"></i> Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
-
+                @include('tables.points', ['points' => $star->recent_points])
+                <hr>
+                <div class="text-center">
+                    <a href="{{url("events?sid=$star->id")}}"> See All </a>
+                </div>
             </div>
         </div>
     </div>
