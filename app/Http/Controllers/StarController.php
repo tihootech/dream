@@ -22,7 +22,7 @@ class StarController extends Controller
 
     public function edit(Star $star)
     {
-        $fields = array_keys($star->details->attributesToArray());
+        $fields = \DB::getSchemaBuilder()->getColumnListing('details');
         array_shift($fields);array_pop($fields);array_pop($fields);
         return view('stars.edit', compact('star', 'fields'));
     }

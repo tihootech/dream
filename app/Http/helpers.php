@@ -130,3 +130,17 @@ function sort_prixes($arr) {
     );
     return $arr;
 }
+
+
+function birthdays()
+{
+    $objects = \App\Detail::all();
+    $list = [];
+    foreach ($objects as $object) {
+        $time = strtotime($object->birthday);
+        if(date('m-d') == date('m-d', $time)){
+            $list []= $object->name;
+        }
+    }
+    return $list;
+}

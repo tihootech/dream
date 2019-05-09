@@ -1,10 +1,20 @@
 <div class="dashboard-header">
-    <nav class="navbar navbar-expand-lg bg-white fixed-top">
-        <a class="navbar-brand" href="#">
-            <small class="mx-2 text-info text-capitalize"> Current Month : {{cm()}} - {{cmn()}} </small>
-            <small class="mx-2 text-success"> Current Year : {{cy()}} </small>
-            <small class="mx-2 text-danger"> This Month : {{nf(get_points(cm(),cy()))}} </small>
-        </a>
+    <nav class="navbar navbar-expand-lg bg-white fixed-top pl-4">
+        <span class="mx-2 text-info text-capitalize"> Current Month : {{cm()}} - {{cmn()}} </span>
+        <span class="mx-2 text-success"> Current Year : {{cy()}} </span>
+        <span class="mx-2 text-danger"> This Month : {{nf(get_points(cm(),cy()))}} </span>
+        <small class="mx-2">
+            <a href="{{url('birthdays')}}">
+                @if (count( $birthdays = birthdays() ))
+                    <i class="fa fa-birthday-cake text-secondary"></i>
+                    @foreach ($birthdays as $birthday)
+                        <span class="mx-1"> {{$birthday}} </span>
+                    @endforeach
+                @else
+                    <em class="text-muted"> no birthdays... </em>
+                @endif
+            </a>
+        </small>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

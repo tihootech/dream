@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Star;
 use App\Point;
 use App\BasePoint;
@@ -11,6 +12,8 @@ use App\Award;
 use App\Setting;
 use App\Competition;
 use App\Winner;
+use App\Detail;
+
 
 class GameController extends Controller
 {
@@ -294,5 +297,28 @@ class GameController extends Controller
             return redirect('home')->withMessage("Points to sync for $star->name : $sum");
         }
         return redirect('home')->withMessage("Nothing to sync");
+    }
+
+    public function birthdays()
+    {
+        $details = Detail::orderBy('birthday')->get();
+        $result = Detail::select('*', \DB::raw('RIGHT(birthday,2) as day'))->whereNotNull('birthday')->orderBy('day')->get()
+        ->groupBy(function($date) {
+            return Carbon::parse($date->birthday)->format('m');
+        })->sortKeys();
+        return view('game.birthdays', compact('result'));
+        // $pasts = [];
+        // $todays = [];
+        // $futures = [];
+        // $unknowns = [];
+        //
+        // foreach ($objects as $object) {
+        //     $time = strtotime($object->birthday);
+        //     if (!$object->birthday) $unknowns []= $object;
+        //     elseif(date('m-d') == date('m-d', $time)) $todays []= $object;
+        //     elseif(date('m-d') > date('m-d', $time)) $pasts []= $object;
+        //     elseif(date('m-d') < date('m-d', $time)) $futures []= $object;
+        // }
+        // dd($unknowns);
     }
 }

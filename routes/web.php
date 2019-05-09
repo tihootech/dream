@@ -26,6 +26,7 @@ Route::get('points/delete/{point}', 'GameController@delete_point');
 Route::get('points/{point}/edit', 'GameController@edit_point');
 Route::get('prixes/{year?}', 'GameController@prixes')->name('prixes');
 Route::get('sync/{name}', 'GameController@sync');
+Route::get('birthdays', 'GameController@birthdays');
 
 
 // settings
