@@ -8,7 +8,7 @@
             <th scope="col"> City </th>
             <th scope="col"> Age </th>
             <th scope="col"> Height </th>
-            <th scope="col" colspan="2"> Actions </th>
+            <th scope="col" colspan="3"> Actions </th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,14 @@
                 <td> {{$star->details->city ?? '-'}} </td>
                 <td> {{$star->age()}} </td>
                 <td> {{$star->details->height ?? '-'}} </td>
-                <td align="center"> <a href="{{url("stars/$star->id/edit")}}"> <i class="fa fa-edit text-success"></i> </a> </td>
+                <td align="center">
+                    <a href="https://google.com/search?q={{str_replace(' ','+',$star->name)}}+bio" target="_blank">
+                        <i class="fa fa-globe text-primary"></i>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="{{url("stars/$star->id/edit")}}"> <i class="fa fa-edit text-success"></i> </a>
+                </td>
                 <td align="center">
                     <form class="d-inline" action="{{url("stars/$star->id")}}" method="post" onsubmit="return confirm('Are you sure?');">
                         @csrf
