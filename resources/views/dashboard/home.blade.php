@@ -6,6 +6,7 @@
 
 @section('main')
 
+
     @if ($stars = session('stars'))
         <div class="card card-body">
             @include('tables.stars')
@@ -78,8 +79,8 @@
                         @csrf
 
                         <div class="form-group col-md-6">
-                            <label for="star"> Star </label>
-                            <input type="text" name="star" class="form-control" id="star">
+                            <label for="star-add"> Star </label>
+                            <input type="text" name="star" class="form-control" id="star-add">
                         </div>
 
                         <div class="form-group col-md-3">
@@ -106,4 +107,11 @@
             </div>
         </div>
     </div>
+
+    @if ($stars = session('list'))
+        <div class="card card-body m-0">
+            @include('tables.stars')
+        </div>
+    @endif
+
 @endsection

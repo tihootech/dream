@@ -137,28 +137,42 @@ class GameController extends Controller
         $string = $request->string;
         $data = explode(',', $string);
 
-        $name = $request->name ?? $data[0];
+        $name_string = $request->name ?? $data[0];
         $type = $request->type;
         $points = $data[1] ?? 0;
         $cloth = $data[2] ?? 0;
         $kid = $data[3] ?? null;
 
+        $list = []; // to store stars object
+
+        // no point case
         if (!$points) {
             return redirect('home')->withError("Please provide points")->withInput();
         }
 
-        $possible_stars = Star::where('name', 'like', "%$name%")->get();
-        $count = count($possible_stars);
+        // create list array
+        $names = explode('&', $name_string);
+        $is_single = count($names) == 1;
+        foreach ($names as $name) {
+            $possible_stars = Star::where('name', 'like', "%$name%")->get();
+            $count = count($possible_stars);
+            if ($count < 1) {
+                $error = $is_single ? "Nothing found" : "For One of them nothing found";
+                return back()->withError($error)->withInput();
+            }elseif( $count > 1 ) {
+                if ($is_single) {
+                    return view('game.possible_stars', compact('possible_stars', 'string', 'type'));
+                }else {
+                    return back()->withError('For One of them more than one star found')->withInput();
+                }
+            }else{
+                $list []= $possible_stars->first();
+            }
+        }
 
-        if ($count == 0) {
-            return redirect('home')->withError("Nothing found")->withInput();
-        }
-        if ($count > 1) {
-            return view('game.possible_stars', compact('possible_stars', 'string', 'type'));
-        }
-        if ($count == 1) {
-            $star = $possible_stars->first();
-            $messages []= "Your string was : $string";
+        // loop through list and list contains star model instances
+        $messages = ["Your string was : $string"];
+        foreach ($list as $star) {
             if ($points > 0) {
                 $sum = $star->assign_points($points, $type);
                 $messages []= "$sum added for $star->name as $type";
@@ -171,8 +185,8 @@ class GameController extends Controller
                 $sum = $star->assign_points($kid, 'kid');
                 $messages []= "$sum added for $star->name as kid";
             }
-            return redirect('home')->withMessages($messages)->withInput(compact('type'));
         }
+        return redirect('home')->withList($list)->withMessages($messages)->withInput(compact('type'));
 
     }
 
@@ -196,7 +210,7 @@ class GameController extends Controller
             $messages []= nf($sum)." points added for $star->name because of her kids.";
         }
 
-        return redirect('home')->withMessages($messages);
+        return redirect('home')->withList([$star])->withMessages($messages);
     }
 
     public function master(Request $request)

@@ -22,7 +22,7 @@
                 <td> {{$star->age()}} </td>
                 <td> {{$star->details->height ?? '-'}} </td>
                 <td align="center">
-                    <a href="https://google.com/search?q={{str_replace(' ','+',$star->name)}}+bio" target="_blank">
+                    <a href="https://google.com/search?q={{$star->qname()}}+freeones+bio" target="_blank">
                         <i class="fa fa-globe text-primary"></i>
                     </a>
                 </td>

@@ -23,7 +23,7 @@
                 <li class="nav-item">
                     <div id="custom-search" class="top-search-bar">
                         <form action="{{url('search')}}" method="get">
-                            <input class="form-control" name="ps" type="text" placeholder="Search...">
+                            <input class="form-control" name="ps" type="text" placeholder="Search..." id="header-search">
                         </form>
                     </div>
                 </li>

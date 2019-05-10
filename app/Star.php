@@ -10,6 +10,11 @@ class Star extends Model
 
     protected $guarded = ['id'];
 
+    public function qname()
+    {
+        return str_replace(' ','+',$this->name);
+    }
+
     public static function nfind($name)
     {
         return self::where('name', $name)->first();

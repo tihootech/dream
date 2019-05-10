@@ -111,7 +111,7 @@
     <!-- slimscroll js -->
     <script src="{{asset('assets/vendor/slimscroll/jquery.slimscroll.js')}}"></script>
     <!-- main js -->
-    <script src="{{asset('assets/libs/js/main-js.js')}}"></script>
+    <script src="{{asset('assets/libs/js/main-js.js?v=2')}}"></script>
     <!-- chart chartist js -->
     <script src="{{asset('assets/vendor/charts/chartist-bundle/chartist.min.js')}}"></script>
     <!-- sparkline js -->
