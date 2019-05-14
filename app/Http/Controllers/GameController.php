@@ -275,12 +275,30 @@ class GameController extends Controller
 
     public function events(Request $request)
     {
+        // get all different types in points
+        $types = Point::select('type')->distinct()->get()->toArray();
+        $types = array_map('current', $types);
+
+        // build query
         $points = Point::query();
         if ($sid = $request->sid) {
             $points = $points->where('star_id', $sid);
         }
-        $points = $points->latest()->paginate(50);
-        return view('game.events', compact('points'));
+        if ($type = $request->type) {
+            $points = $points->where('type', $type);
+        }
+
+        // order
+        if ($order = request('order')) {
+            $otype = request('otype') ?? 'DESC';
+            $points = $points->orderBy($order, $otype);
+        }else {
+            $points = $points->latest();
+        }
+
+        // return view
+        $points = $points->paginate(50);
+        return view('game.events', compact('points', 'types'));
     }
 
     public function delete_point(Point $point)

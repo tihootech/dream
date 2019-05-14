@@ -17,8 +17,8 @@ jQuery(document).ready(function($) {
             e.preventDefault();
             $('#star-add').focus();
         }
-        // f3 or ctrl+f
-        if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+        // f3
+        if (e.keyCode === 114) {
             e.preventDefault();
             $('#header-search').focus();
         }

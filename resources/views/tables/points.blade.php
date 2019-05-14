@@ -16,7 +16,7 @@
             <tr>
                 <th scope="row">{{$i+1}}</th>
                 <td> <a href="{{url("stars/$point->star_id")}}"> {{$point->star->name}} </a> </td>
-                <td> {{$point->amount}} </td>
+                <td> {{nf($point->amount)}} </td>
                 <td> {{$point->type}} </td>
                 <td class="text-capitalize"> {{mn($point->month)}} </td>
                 <td> {{$point->year}} </td>
