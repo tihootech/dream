@@ -20,6 +20,11 @@ class Star extends Model
         return self::where('name', $name)->first();
     }
 
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
     public function awards()
     {
         return $this->hasMany(Award::class);
@@ -33,6 +38,12 @@ class Star extends Model
     public function recent_points()
     {
         return $this->hasMany(Point::class)->latest()->take(20);
+    }
+
+    public function change_room($room_id)
+    {
+        $this->room_id = $room_id;
+        $this->save();
     }
 
     public function rank($type)

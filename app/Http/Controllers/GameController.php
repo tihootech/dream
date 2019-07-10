@@ -13,6 +13,7 @@ use App\Setting;
 use App\Competition;
 use App\Winner;
 use App\Detail;
+use App\Room;
 
 
 class GameController extends Controller
@@ -273,34 +274,6 @@ class GameController extends Controller
         return view('game.prixes', compact('prixes_list', 'result'));
     }
 
-    public function events(Request $request)
-    {
-        // get all different types in points
-        $types = Point::select('type')->distinct()->get()->toArray();
-        $types = array_map('current', $types);
-
-        // build query
-        $points = Point::query();
-        if ($sid = $request->sid) {
-            $points = $points->where('star_id', $sid);
-        }
-        if ($type = $request->type) {
-            $points = $points->where('type', $type);
-        }
-
-        // order
-        if ($order = request('order')) {
-            $otype = request('otype') ?? 'DESC';
-            $points = $points->orderBy($order, $otype);
-        }else {
-            $points = $points->latest();
-        }
-
-        // return view
-        $points = $points->paginate(50);
-        return view('game.events', compact('points', 'types'));
-    }
-
     public function delete_point(Point $point)
     {
         $point->delete();
@@ -319,6 +292,16 @@ class GameController extends Controller
         }
     }
 
+    public function change_room($sid, Request $request)
+    {
+        $star = Star::find($sid);
+        $room = Room::where('block', $request->block)->where('number', $request->number)->first();
+        if($room){
+            $star->change_room($room->id);
+            return back()->withMessage("Room Changed Successfully for $star->name");
+        }
+    }
+
     public function sync($name)
     {
         $star = Star::where('name', $name)->first();
@@ -331,26 +314,4 @@ class GameController extends Controller
         return redirect('home')->withMessage("Nothing to sync");
     }
 
-    public function birthdays()
-    {
-        $details = Detail::orderBy('birthday')->get();
-        $result = Detail::select('*', \DB::raw('RIGHT(birthday,2) as day'))->whereNotNull('birthday')->orderBy('day')->get()
-        ->groupBy(function($date) {
-            return Carbon::parse($date->birthday)->format('m');
-        })->sortKeys();
-        return view('game.birthdays', compact('result'));
-        // $pasts = [];
-        // $todays = [];
-        // $futures = [];
-        // $unknowns = [];
-        //
-        // foreach ($objects as $object) {
-        //     $time = strtotime($object->birthday);
-        //     if (!$object->birthday) $unknowns []= $object;
-        //     elseif(date('m-d') == date('m-d', $time)) $todays []= $object;
-        //     elseif(date('m-d') > date('m-d', $time)) $pasts []= $object;
-        //     elseif(date('m-d') < date('m-d', $time)) $futures []= $object;
-        // }
-        // dd($unknowns);
-    }
 }

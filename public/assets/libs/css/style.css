@@ -6979,5 +6979,5 @@ div.bootstrap-select {
     /* width: 100% !important; */
 }
 
-/* Custom, iPhone Retina */
-@media only screen and (max-width:320px) {}
+/* Custom */
+.hidden {display:none}

@@ -3,6 +3,15 @@ jQuery(document).ready(function($) {
     'use strict';
 
     // ==============================================================
+    // change room trigger
+    // ==============================================================
+    $('.trigger-change-room').click(function () {
+        var row = $(this).attr('data-row-number');
+        $('.change-room-'+row).slideToggle();
+    });
+
+
+    // ==============================================================
     // keyboards
     // ==============================================================
     window.addEventListener("keydown",function (e) {

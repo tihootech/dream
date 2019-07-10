@@ -82,6 +82,14 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                    <a href="{{route('rooms')}}" class="connection-item">
+                                        <i class="fa fa-bed d-block"></i>
+                                        Rooms
+                                    </a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </li>

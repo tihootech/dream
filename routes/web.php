@@ -21,13 +21,17 @@ Route::post('stars/quick_add', 'GameController@quick_add')->name('quick_add');
 Route::post('stars/quick_plus', 'GameController@quick_plus')->name('quick_plus');
 Route::post('master', 'GameController@master')->name('master');
 Route::get('result/{year?}', 'GameController@result')->name('result');
-Route::get('events', 'GameController@events')->name('events');
 Route::get('points/delete/{point}', 'GameController@delete_point');
 Route::get('points/{point}/edit', 'GameController@edit_point');
 Route::get('prixes/{year?}', 'GameController@prixes')->name('prixes');
+Route::post('rooms/{sid}', 'GameController@change_room')->name('rooms');
 Route::get('sync/{name}', 'GameController@sync');
-Route::get('birthdays', 'GameController@birthdays');
 
+
+// landings
+Route::get('events', 'LandingController@events')->name('events');
+Route::get('rooms', 'LandingController@rooms')->name('rooms');
+Route::get('birthdays', 'LandingController@birthdays');
 
 // settings
 Route::get('settings', 'SettingsController@edit')->name('settings');
