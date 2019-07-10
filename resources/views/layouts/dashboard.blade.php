@@ -6,6 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="root" content="{{url('/')}}">
 
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.jpg')}}">
 
@@ -23,6 +24,7 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-select/css/bootstrap-select.css')}}">
 
     <link rel="stylesheet" href="{{asset('assets/libs/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/libs/css/c-style.css')}}">
 
 </head>
 
@@ -96,6 +98,7 @@
 
 
         </div>
+    @include('partials.random_star')
         <!-- ============================================================== -->
         <!-- end wrapper  -->
         <!-- ============================================================== -->

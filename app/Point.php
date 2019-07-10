@@ -27,6 +27,20 @@ class Point extends Model
         return $collection;
     }
 
+    public static function topN($n, $year=null)
+    {
+        $year = $year ?? cy();
+        $query = "stars.*, SUM(points.amount) as sum";
+        $collection =  Star::select(\DB::raw($query))
+            ->where('year', $year)
+            ->leftJoin('points', 'points.star_id', '=', 'stars.id')
+            ->orderBy('sum', 'DESC')
+            ->groupBy('stars.id')
+            ->limit($n)
+            ->get();
+        return $collection;
+    }
+
     // order is month name or sum
     public static function tops($year=null, $order='sum', $limit=null)
     {

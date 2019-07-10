@@ -18,6 +18,7 @@
                         </p>
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> Picked : {{$star->picked}} </li>
                         <li class="list-group-item"> Country : {{$star->details->country ?? '-'}} </li>
                         <li class="list-group-item"> State : {{$star->details->state ?? '-'}} </li>
                         <li class="list-group-item"> City : {{$star->details->city ?? '-'}} </li>

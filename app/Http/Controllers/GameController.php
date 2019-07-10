@@ -207,7 +207,7 @@ class GameController extends Controller
         if (base_point_exists('master')) {
             $request->validate([
                 'star' => 'exists:stars,name',
-                'degree' => 'numeric|min:1|max:6',
+                'degree' => 'numeric|min:1|max:10',
             ]);
             $star = Star::where('name', $request->star)->first();
             Master::make($star->id, $request->degree);
@@ -288,6 +288,12 @@ class GameController extends Controller
             $star->change_room($room->id);
             return back()->withMessage("Room Changed Successfully for $star->name");
         }
+    }
+
+    public function random($tops=null)
+    {
+        $star = Star::get_random($tops);
+        return $star->name;
     }
 
     public function sync($name)

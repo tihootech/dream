@@ -37,3 +37,6 @@ Route::put('settings/time', 'SettingsController@update_time')->name('update_time
 Route::put('settings/trophies', 'SettingsController@update_trophies')->name('update_trophies');
 Route::put('settings/competitions', 'SettingsController@update_competitions')->name('update_competitions');
 Route::put('settings/base_point', 'SettingsController@update_base_points')->name('update_base_points');
+
+//ajax
+Route::get('random/{tops?}', 'GameController@random')->name('random');

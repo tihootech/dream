@@ -3,6 +3,21 @@ jQuery(document).ready(function($) {
     'use strict';
 
     // ==============================================================
+    // generate random star
+    // ==============================================================
+    $('.generate-random-star').click(function () {
+        var root = $('meta[name=root]').attr('content');
+        var path = root+'/random';
+        var tops = $(this).attr('data-tops');
+        if (tops) {
+            path += '/'+tops;
+        }
+        $.get(path, function(data, status){
+            $('.random-star-box #stars-list').append('<p>'+data+'</p>');
+        });
+    });
+
+    // ==============================================================
     // change room trigger
     // ==============================================================
     $('.trigger-change-room').click(function () {

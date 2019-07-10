@@ -50,10 +50,10 @@ class Star extends Model
     {
         $tops = [];
         if ($type=='month') {
-            $tops = self::tops(cy(), mn(cm()))->toArray();
+            $tops = Point::tops(cy(), mn(cm()))->toArray();
         }
         if ($type=='year') {
-            $tops = self::tops()->toArray();
+            $tops = Point::tops()->toArray();
         }
         $key = array_search($this->id, array_column($tops, 'id'));
         return $key+1;
@@ -111,6 +111,18 @@ class Star extends Model
         $award->year = cy();
         $award->save();
         return $award;
+    }
+
+    public static function get_random($tops=null)
+    {
+        if ($tops) {
+            $stars = Point::topN($tops);
+            $star = $stars->random(1)->first();
+        }else {
+            $star = self::inRandomOrder()->first();
+        }
+        $star->increment('picked');
+        return $star;
     }
 
     public function bring_kid($input)

@@ -6978,8 +6978,3 @@ div.bootstrap-select {
     display: block !important;
     /* width: 100% !important; */
 }
-
-/* Custom */
-.hidden {display:none}
-.no-bg {background: unset}
-.color-inherit{color:inherit}
