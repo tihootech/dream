@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.home');
+        $mode = top20_mode() ? 'top20' : 'home';
+        return view('dashboard.main', compact('mode'));
     }
 }

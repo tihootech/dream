@@ -21,6 +21,10 @@ function mn($number)
     return strtolower($dt->format('F'));
 }
 
+function top20_mode(){
+    return \App\Setting::first()->top20_mode;
+}
+
 function month_color($number)
 {
     if ($number<cm()) {

@@ -18,7 +18,9 @@
                 <input type="text" id="best-night" name="best_night" value="{{old('best_night')}}" class="form-control form-control-lg">
             </div>
             <div class="form-group align-self-end col-md-2">
-                <button type="submit" class="btn btn-primary"> Next Month </button>
+                <button type="submit" class="btn btn-primary">
+                    {{cm() == 12 ? (top20_mode() ? 'To Top20' : 'Finish The Year') : 'Next Month' }}
+                </button>
             </div>
 
         </form>

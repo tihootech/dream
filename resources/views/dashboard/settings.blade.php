@@ -24,6 +24,15 @@
                     <input type="text" name="cy" class="form-control" id="cy" value="{{cy()}}">
                 </div>
 
+                @if (cm() == 12)
+                    <div class="form-group col-md-2">
+                        <div class="custom-control custom-checkbox mt-4">
+                            <input type="checkbox" class="custom-control-input" name="top20_mode" id="top20-mode" value="1" @if(top20_mode()) checked @endif>
+                            <label class="custom-control-label" for="top20-mode"> Top20 Mode </label>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="col-md-2 align-self-center mr-auto">
                     <button type="submit" class="btn btn-primary btn-block mt-2"> Update Month & Year </button>
                 </div>
