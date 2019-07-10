@@ -14,7 +14,7 @@ Route::resource('awards', 'AwardController');
 // game
 Route::get('search', 'GameController@search')->name('search');
 Route::get('process', 'GameController@process')->name('process');
-Route::get('competition/{year?}', 'GameController@competition')->name('competition');
+Route::get('competition/{year?}', 'LandingController@competition')->name('competition');
 Route::post('competition', 'GameController@save_competition');
 Route::post('next_month', 'GameController@next_month');
 Route::post('stars/quick_add', 'GameController@quick_add')->name('quick_add');

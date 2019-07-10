@@ -10,10 +10,19 @@
             <a href="{{url('competition?change=1')}}" class="btn mx-1 btn-outline-primary"> <i class="fa fa-edit mr-1"></i> Change </a>
             <a href="{{url('competition')}}" class="btn mx-1 btn-outline-primary"> <i class="fa fa-eye mr-1"></i> Watch </a>
         </div>
+        <div class="alert alert-info">
+            <ul>
+                <li> Competitions are created in <a target="_blank" href="{{url('setting')}}"> Setting </a> </li>
+                <li> Each competition has many Winners </li>
+                <li> Base is 10,000$ for money, and 2500 for points </li>
+                <li> formula is BASE * (12/RANK) * BASE </li>
+                <li> If you check "assign points too", it will assign points for new star but i will not delete points assigned to pthe previous star. You have to delete it manually. </li>
+            </ul>
+        </div>
         @foreach ($competitions as $competition)
             <div class="card">
                 <div class="card-header bg-dark text-light">
-                    {{$competition->name}}
+                    {{$competition->name}} (base:{{$competition->base}})
                 </div>
                 <div class="card-body">
                     @if ($change)
@@ -23,13 +32,13 @@
                             <input type="hidden" name="competition_id" value="{{$competition->id}}">
                             <input type="hidden" name="year" value="{{$year}}">
 
-                            @for ($i=1; $i <= 4; $i++)
+                            @foreach ($competition->winners_in($year) as $i => $winner)
                                 <div class="form-group col-md-3">
-                                    <label for="rank{{$i}}"> Rank {{$i}} </label>
-                                    <input type="text" name="rank[{{$i}}]" id="rank{{$i}}" class="form-control"
-                                        value="{{old('rank')[$i] ?? $competition->get_rank($i,$year)}}">
+                                    <label for="rank-{{$i}}"> Rank {{$i+1}} </label>
+                                    <input type="text" name="rank[{{$i+1}}]" id="rank-{{$i}}" class="form-control"
+                                        value="{{old('rank')[$i+1] ?? $winner->star->name}}">
                                 </div>
-                            @endfor
+                            @endforeach
 
                             <div class="col-12 text-center my-4">
                                 <input class="form-check-input" type="checkbox" name="points" value="1">
@@ -43,15 +52,25 @@
 
                         </form>
                     @else
-                        @if (count($result[$competition->id]))
+                        @if ( count($competition->winners_in($year)) )
                             <div class="row px-4">
-                                @for ($i=1; $i <= 4; $i++)
+                                @foreach ($competition->winners_in($year) as $i => $winner)
                                     <div class="col-md-3">
-                                        <div class="card card-body bg-{{rank_color($i)}}">
-                                            {{$competition->get_rank($i,$year)}}
+                                        <div class="card card-body bg-{{rank_color($i+1)}}">
+                                            <ul class="list-group">
+                                                <li class="list-group-item no-bg">
+                                                    <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{$winner->star->name}} </a>
+                                                </li>
+                                                <li class="list-group-item no-bg">
+                                                    <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{nf($winner->money)}}$ </a>
+                                                </li>
+                                                <li class="list-group-item no-bg">
+                                                    <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{nf($winner->points)}} pts </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                @endfor
+                                @endforeach
                             </div>
                         @else
                             <div class="alert alert-warning">

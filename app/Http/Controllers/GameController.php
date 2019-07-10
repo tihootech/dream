@@ -40,18 +40,6 @@ class GameController extends Controller
         return view('game.process');
     }
 
-    public function competition($year=null, Request $request)
-    {
-        if(!$year) $year = cy();
-        $change = $request->change;
-        $competitions = Competition::all();
-        $result = [];
-        foreach ($competitions as $competition) {
-            $result[$competition->id]= Winner::where('year', $year)->where('competition_id', $competition->id)->orderBy('rank')->get();
-        }
-        return view('game.competition', compact('competitions', 'result', 'change', 'year'));
-    }
-
     public function save_competition(Request $request)
     {
         $request->validate([

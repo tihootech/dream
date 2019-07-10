@@ -11,7 +11,7 @@ class AwardController extends Controller
 {
     public function index()
     {
-        $awards = Award::latest()->paginate(10);
+        $awards = Award::latest()->paginate(25);
         $trophies = Trophy::all();
         return view('awards.index', compact('awards','trophies'));
     }

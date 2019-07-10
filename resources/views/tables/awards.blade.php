@@ -7,6 +7,7 @@
             <th scope="col"> Money </th>
             <th scope="col"> Month </th>
             <th scope="col"> Year </th>
+            <th scope="col"> Real Assign Date </th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,9 @@
                 <td>{{nf($award->money)}} $</td>
                 <td>{{ucfirst(mn($award->month))}}</td>
                 <td>{{$award->year}}</td>
+                <td title="{{$award->created_at->diffForHumans()}}" data-toggle="tooltip">
+                    {{$award->created_at->format('Y-m-d')}}
+                </td>
             </tr>
         @endforeach
     </tbody>

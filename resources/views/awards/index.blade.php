@@ -6,6 +6,12 @@
 
 @section('main')
 
+    <div class="alert alert-info">
+        <ul>
+            <li> It's so simple. here you can manage those awards which they can be assigned multiple times in a year. </li>
+            <li> Realation between Trophy and Award is "title". </li>
+        </ul>
+    </div>
     <div class="card">
         <div class="card-header">
             <h3> Assign Trophy </h3>

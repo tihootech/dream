@@ -6981,3 +6981,5 @@ div.bootstrap-select {
 
 /* Custom */
 .hidden {display:none}
+.no-bg {background: unset}
+.color-inherit{color:inherit}

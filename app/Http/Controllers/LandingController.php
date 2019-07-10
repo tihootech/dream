@@ -4,7 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Star;
 use App\Point;
+use App\BasePoint;
+use App\Master;
+use App\Award;
+use App\Setting;
+use App\Competition;
+use App\Winner;
 use App\Detail;
 use App\Room;
 
@@ -52,5 +59,14 @@ class LandingController extends Controller
     {
         $rooms = Room::orderBy('block')->orderBy('number')->get();
         return view('game.rooms', compact('rooms'));
+    }
+
+
+    public function competition($year=null, Request $request)
+    {
+        if(!$year) $year = cy();
+        $change = $request->change;
+        $competitions = Competition::all();
+        return view('game.competition', compact('competitions', 'change', 'year'));
     }
 }
