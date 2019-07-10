@@ -144,3 +144,9 @@ function birthdays()
     }
     return $list;
 }
+
+function month_reached($year, $month)
+{
+    $sum = \DB::table('points')->where('month', $month)->where('year', $year)->sum('amount');
+    return $sum > 0;
+}

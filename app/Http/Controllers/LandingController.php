@@ -69,4 +69,15 @@ class LandingController extends Controller
         $competitions = Competition::all();
         return view('game.competition', compact('competitions', 'change', 'year'));
     }
+
+    public function top10_track($year=null, Request $request)
+    {
+        if(!$year) $year = cy();
+        for ($month=1; $month <=12 ; $month++) {
+            if (month_reached($year,$month)) {
+                $tops [$month]= Point::top10($year,$month);
+            }
+        }
+        return view('game.top10_track', compact('tops'));
+    }
 }

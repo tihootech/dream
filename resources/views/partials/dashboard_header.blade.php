@@ -89,6 +89,12 @@
                                         Rooms
                                     </a>
                                 </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                    <a href="{{route('top10_track')}}" class="connection-item">
+                                        <i class="fa fa-road d-block"></i>
+                                        Top10 Track
+                                    </a>
+                                </div>
                             </div>
                         </li>
                     </ul>

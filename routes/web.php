@@ -11,7 +11,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::resource('stars', 'StarController');
 Route::resource('awards', 'AwardController');
 
-// game
+// game and landing
 Route::get('search', 'GameController@search')->name('search');
 Route::get('process', 'GameController@process')->name('process');
 Route::get('competition/{year?}', 'LandingController@competition')->name('competition');
@@ -26,12 +26,10 @@ Route::get('points/{point}/edit', 'GameController@edit_point');
 Route::get('prixes/{year?}', 'GameController@prixes')->name('prixes');
 Route::post('rooms/{sid}', 'GameController@change_room')->name('rooms');
 Route::get('sync/{name}', 'GameController@sync');
-
-
-// landings
 Route::get('events', 'LandingController@events')->name('events');
 Route::get('rooms', 'LandingController@rooms')->name('rooms');
 Route::get('birthdays', 'LandingController@birthdays');
+Route::get('top10-track/{year?}', 'LandingController@top10_track')->name('top10_track');
 
 // settings
 Route::get('settings', 'SettingsController@edit')->name('settings');

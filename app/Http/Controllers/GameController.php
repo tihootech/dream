@@ -30,7 +30,7 @@ class GameController extends Controller
         $year = $year ?? cy();
         $order = request('order') ?? cmn();
 
-        $stars = Star::tops($year, $order);
+        $stars = Point::tops($year, $order);
 
         return view('game.result', compact('stars'));
     }
@@ -101,8 +101,8 @@ class GameController extends Controller
             $best_night = Star::where('name', $request->best_night)->first();
             $best_night->assign_award($trophies[1]);
 
-            $prixes = Star::tops(cy(), cmn(), 5);
-            $ranks = Star::tops(cy(), 'sum', 3);
+            $prixes = Point::tops(cy(), cmn(), 5);
+            $ranks = Point::tops(cy(), 'sum', 3);
 
             foreach ($prixes as $i => $star) {
                 $star->assign_award($trophies[$i+2]);
@@ -256,7 +256,7 @@ class GameController extends Controller
         // get prixes with points
         $prxies = [];
         for ($i=1; $i < cm() ; $i++) {
-            $prixes_list [mn($i)]= Star::tops($year, mn($i), 5);
+            $prixes_list [mn($i)]= Point::tops($year, mn($i), 5);
         }
 
         return view('game.prixes', compact('prixes_list', 'result'));
