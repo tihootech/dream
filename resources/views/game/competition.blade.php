@@ -32,11 +32,11 @@
                             <input type="hidden" name="competition_id" value="{{$competition->id}}">
                             <input type="hidden" name="year" value="{{$year}}">
 
-                            @foreach ($competition->winners_in($year) as $i => $winner)
+                            @foreach ($competition->winners_in($year, true) as $i => $winner)
                                 <div class="form-group col-md-3">
                                     <label for="rank-{{$i}}"> Rank {{$i+1}} </label>
                                     <input type="text" name="rank[{{$i+1}}]" id="rank-{{$i}}" class="form-control"
-                                        value="{{old('rank')[$i+1] ?? $winner->star->name}}">
+                                        value="{{old('rank')[$i+1] ?? $winner->star->name ?? null}}">
                                 </div>
                             @endforeach
 
@@ -59,7 +59,7 @@
                                         <div class="card card-body bg-{{rank_color($i+1)}}">
                                             <ul class="list-group">
                                                 <li class="list-group-item no-bg">
-                                                    <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{$winner->star->name}} </a>
+                                                    <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{$winner->star->name ?? null}} </a>
                                                 </li>
                                                 <li class="list-group-item no-bg">
                                                     <a href="{{url("stars/$winner->star_id")}}" class="color-inherit"> {{nf($winner->money)}}$ </a>

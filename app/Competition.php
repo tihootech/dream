@@ -11,9 +11,10 @@ class Competition extends Model
         return $this->hasMany(Winner::class);
     }
 
-    public function winners_in($year)
+    public function winners_in($year, $return_empty_array=false)
     {
-        return Winner::where('competition_id', $this->id)->where('year', $year)->get();
+        $result = Winner::where('competition_id', $this->id)->where('year', $year)->get();
+        return (count($result) || !$return_empty_array) ? $result : [new Winner,new Winner,new Winner,new Winner];
     }
 
     public function winner($rank,$year)
