@@ -73,6 +73,7 @@ class Star extends Model
         }else {
             $star = new self;
             $star->name = $name;
+            $star->year_added = cy();
             $star->save();
             return $star;
         }
