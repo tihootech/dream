@@ -19,6 +19,7 @@ Route::post('competition', 'GameController@save_competition');
 Route::post('next_month', 'ProcessController@next_month');
 Route::post('stars/quick_add', 'GameController@quick_add')->name('quick_add');
 Route::post('stars/quick_plus', 'GameController@quick_plus')->name('quick_plus');
+Route::post('stars/quick_kid', 'GameController@quick_kid')->name('quick_kid');
 Route::post('master', 'GameController@master')->name('master');
 Route::get('result/{year?}', 'GameController@result')->name('result');
 Route::get('points/delete/{point}', 'GameController@delete_point');

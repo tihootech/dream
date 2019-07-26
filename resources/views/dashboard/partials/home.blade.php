@@ -90,5 +90,30 @@
 				</form>
 			</div>
 		</div>
+		<div class="card">
+			<div class="card-header">
+				<h3> Quick Kid </h3>
+			</div>
+			<div class="card-body">
+				<form class="row" action="{{route('quick_kid')}}" method="post">
+					@csrf
+
+					<div class="form-group col-md-6">
+						<label for="star-add"> Star </label>
+						<input type="text" name="star" class="form-control" id="star-add">
+					</div>
+
+					<div class="form-group col-md-3">
+						<label for="kids"> Kids </label>
+						<input type="number" name="kids" class="form-control" id="kids" autocomplete="off">
+					</div>
+
+					<div class="col-md-3 mx-auto align-self-center">
+						<button type="submit" class="btn btn-primary btn-block mt-2"> Submit </button>
+					</div>
+
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

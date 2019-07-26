@@ -132,6 +132,19 @@ class GameController extends Controller
 
     }
 
+    public function quick_kid(Request $request)
+    {
+        $request->validate([
+            'star' => 'required|exists:stars,name',
+            'kids' => 'required|integer'
+        ]);
+        $star = Star::nfind($request->star);
+        $points = $star->assign_points($request->kids, 'kid');
+        $message = nf($points)." assigned to $star->name for kid";
+        $list = [$star];
+        return redirect('home')->withList($list)->withMessage($message);
+    }
+
     public function quick_add(Request $request)
     {
         if (!Star::where('name', $request->star)->first()) {
