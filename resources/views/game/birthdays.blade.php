@@ -16,7 +16,7 @@
             <hr>
             <div class="">
                 @foreach ($details as $detail)
-                    <span class="badge m-1
+                    <a @if($detail->star) href="{{url("stars/{$detail->star->id}")}}" @endif class="badge m-1
                         @if (date('m')==$month)
                             @if(date('d') == $detail->day)
                                 badge-danger
@@ -30,7 +30,7 @@
                         @endif
                         ">
                         {{$detail->name}}, {{$detail->birthday}}
-                    </span>
+                    </a>
                 @endforeach
             </div>
         </div>

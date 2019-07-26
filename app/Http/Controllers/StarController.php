@@ -15,6 +15,19 @@ class StarController extends Controller
         return view('stars.index', compact('stars'));
     }
 
+    public function details(Request $request)
+    {
+        $q = Detail::query();
+        if ($request->mode == 'youngest') {
+            $q = $q->orderBy('birthday', 'DESC');
+        }
+        if ($request->mode == 'tallest') {
+            $q = $q->orderBy('height', 'DESC');
+        }
+        $details = $q->get();
+        return view('stars.details', compact('details'));
+    }
+
     public function show(Star $star)
     {
         return view('stars.show', compact('star'));
@@ -46,6 +59,12 @@ class StarController extends Controller
         $star->delete();
         // \DB::table('points')->where('star_id', $star->id)->delete();
         return back()->withMessage("Only the star herself deleted. her points are still in database. her id was $star->id");
+    }
+
+    public function delete_details($name)
+    {
+        Detail::where('name', $name)->delete();
+        return back()->withMessage("Details for $name deleted.");
     }
 
 }

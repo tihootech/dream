@@ -32,6 +32,8 @@ Route::get('rooms', 'LandingController@rooms')->name('rooms');
 Route::get('birthdays', 'LandingController@birthdays');
 Route::get('top10-track/{year?}', 'LandingController@top10_track')->name('top10_track');
 Route::post('final/{type}', 'SemiFinalController@store');
+Route::get('details', 'StarController@details')->name('details');
+Route::delete('details/{name}', 'StarController@delete_details');
 
 // settings
 Route::get('settings', 'SettingsController@edit')->name('settings');
