@@ -1,28 +1,45 @@
+$(document).ready(function() {
 
-jQuery(document).ready(function($) {
     'use strict';
 
     // ==============================================================
     // generate random star
     // ==============================================================
+    $('.top20-random-generator').click(function () {
+    	var target = $(this).parent().siblings('.target');
+    	var value = target.val();
+    	var root = $('meta[name=root]').attr('content');
+    	var path = root+'/random/20?filters='+value;
+    	$.get(path, function(data, status){
+    	    var result = value ? value+','+data : data;
+    	    target.val(result);
+    	});
+    });
+
     $('.generate-random-star').click(function () {
-        var root = $('meta[name=root]').attr('content');
-        var path = root+'/random';
-        var tops = $(this).attr('data-tops');
-        if (tops) {
-            path += '/'+tops;
-        }
-        $.get(path, function(data, status){
-            $('.random-star-box #stars-list').append('<p>'+data+'</p>');
-        });
+    	var root = $('meta[name=root]').attr('content');
+    	var path = root+'/random';
+    	var tops = $(this).attr('data-tops');
+    	if (tops) path += '/'+tops;
+    	$.get(path, function(data, status){
+    		$('.random-star-box #stars-list').append('<p>'+data+'</p>');
+    	});
+    });
+
+    // ==============================================================
+    // semi-final-title trigger
+    // ==============================================================
+    $('.semi-final-title > small').click(function () {
+    	$(this).parent().siblings('.show-details').toggle();
+    	$(this).parent().siblings('.change-details').toggle();
     });
 
     // ==============================================================
     // change room trigger
     // ==============================================================
     $('.trigger-change-room').click(function () {
-        var row = $(this).attr('data-row-number');
-        $('.change-room-'+row).slideToggle();
+    	var row = $(this).attr('data-row-number');
+    	$('.change-room-'+row).slideToggle();
     });
 
 
@@ -31,149 +48,32 @@ jQuery(document).ready(function($) {
     // ==============================================================
     window.addEventListener("keydown",function (e) {
 
-        // f1
-        if (e.keyCode === 112) {
-            e.preventDefault();
-            $('#string').focus();
-        }
-        // f2
-        if (e.keyCode === 113) {
-            e.preventDefault();
-            $('#star-add').focus();
-        }
-        // f3
-        if (e.keyCode === 114) {
-            e.preventDefault();
-            $('#header-search').focus();
-        }
+    	// f1
+    	if (e.keyCode === 112) {
+    		e.preventDefault();
+    		$('#string').focus();
+    	}
+    	// f2
+    	if (e.keyCode === 113) {
+    		e.preventDefault();
+    		$('#star-add').focus();
+    	}
+    	// f3
+    	if (e.keyCode === 114) {
+    		e.preventDefault();
+    		$('#header-search').focus();
+    	}
 
-    })
-
-    // ==============================================================
-    // Notification list
-    // ==============================================================
-    if ($(".notification-list").length) {
-
-        $('.notification-list').slimScroll({
-            height: '250px'
-        });
-
-    }
+    });
 
     // ==============================================================
-    // Menu Slim Scroll List
+    // initializers
     // ==============================================================
-
-
-    if ($(".menu-list").length) {
-        $('.menu-list').slimScroll({
-
-        });
-    }
-
-    // ==============================================================
-    // Sidebar scrollnavigation
-    // ==============================================================
-
-    if ($(".sidebar-nav-fixed a").length) {
-        $('.sidebar-nav-fixed a')
-            // Remove links that don't actually link to anything
-
-            .click(function(event) {
-                // On-page links
-                if (
-                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
-                    location.hostname == this.hostname
-                ) {
-                    // Figure out element to scroll to
-                    var target = $(this.hash);
-                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                    // Does a scroll target exist?
-                    if (target.length) {
-                        // Only prevent default if animation is actually gonna happen
-                        event.preventDefault();
-                        $('html, body').animate({
-                            scrollTop: target.offset().top - 90
-                        }, 1000, function() {
-                            // Callback after animation
-                            // Must change focus!
-                            var $target = $(target);
-                            $target.focus();
-                            if ($target.is(":focus")) { // Checking if the target was focused
-                                return false;
-                            } else {
-                                $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-                                $target.focus(); // Set focus again
-                            };
-                        });
-                    }
-                };
-                $('.sidebar-nav-fixed a').each(function() {
-                    $(this).removeClass('active');
-                })
-                $(this).addClass('active');
-            });
-
-    }
-
-    // ==============================================================
-    // tooltip
-    // ==============================================================
-    if ($('[data-toggle="tooltip"]').length) {
-
-            $('[data-toggle="tooltip"]').tooltip()
-
-        }
-
-     // ==============================================================
-    // popover
-    // ==============================================================
-       if ($('[data-toggle="popover"]').length) {
-            $('[data-toggle="popover"]').popover()
-
-    }
-     // ==============================================================
-    // Chat List Slim Scroll
-    // ==============================================================
-
-
-        if ($('.chat-list').length) {
-            $('.chat-list').slimScroll({
-            color: 'false',
-            width: '100%'
-
-
-        });
-    }
-    // ==============================================================
-    // dropzone script
-    // ==============================================================
-
- //     if ($('.dz-clickable').length) {
- //            $(".dz-clickable").dropzone({ url: "/file/post" });
- // }
+	if ($('[data-toggle="tooltip"]').length) {
+		$('[data-toggle="tooltip"]').tooltip();
+	}
+	if ($('[data-toggle="popover"]').length) {
+		$('[data-toggle="popover"]').popover();
+	}
 
 }); // AND OF JQUERY
-
-
-// $(function() {
-//     "use strict";
-
-
-
-
-   // var monkeyList = new List('test-list', {
-    //    valueNames: ['name']
-
-     // });
-  // var monkeyList = new List('test-list-2', {
-    //    valueNames: ['name']
-
-   // });
-
-
-
-
-
-
-// });

@@ -2,6 +2,7 @@
 .hidden {display:none}
 .no-bg {background: unset}
 .color-inherit{color:inherit}
+.pointer:hover{cursor: pointer}
 a {transition: 0.5s}
 
 /* random star */
@@ -17,4 +18,14 @@ a {transition: 0.5s}
 }
 .random-star-box #stars-list p {
 	margin: 5px 0px;
+}
+
+/* Top20 Days */
+.day-group {
+	position: relative;
+}
+.day-group > .extras {
+	display: inline-block;
+	position: absolute;
+	right: 20px;
 }

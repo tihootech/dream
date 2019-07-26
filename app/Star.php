@@ -17,7 +17,7 @@ class Star extends Model
 
     public static function nfind($name)
     {
-        return self::where('name', $name)->first();
+        return self::where('name', trim($name))->first();
     }
 
     public function room()
@@ -113,6 +113,7 @@ class Star extends Model
         return $award;
     }
 
+    // tops:numbers, folters:commo seperated star names string
     public static function get_random($tops=null)
     {
         if ($tops) {

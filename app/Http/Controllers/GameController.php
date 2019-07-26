@@ -29,8 +29,9 @@ class GameController extends Controller
     {
         $year = $year ?? cy();
         $order = request('order') ?? cmn();
+        $limit = request('limit');
 
-        $stars = Point::tops($year, $order);
+        $stars = Point::tops($year, $order, $limit);
 
         return view('game.result', compact('stars'));
     }
@@ -71,54 +72,6 @@ class GameController extends Controller
 
         }
         return redirect('competition')->withMessage('Changes Saved');
-    }
-
-    public function next_month(Request $request)
-    {
-        $trophies = [
-            'Best Girl Of The Month', // 0
-            'Best Night Of The Month', // 1
-            'Golden Prix', // 2
-            'Silver Prix', // 3
-            'Bronze Prix', // 4
-            'Position Prix', // 5
-            'Position Prix', // 6
-            'Golden Rank', // 7
-            'Silver Rank', // 8
-            'Bronze Rank', // 9
-        ];
-
-        if (trophies_exist($trophies)) {
-
-            $request->validate([
-                'best_girl' => 'required|exists:stars,name',
-                'best_night' => 'required|exists:stars,name',
-            ]);
-
-            $best_girl = Star::where('name', $request->best_girl)->first();
-            $best_girl->assign_award($trophies[0]);
-
-            $best_night = Star::where('name', $request->best_night)->first();
-            $best_night->assign_award($trophies[1]);
-
-            $prixes = Point::tops(cy(), cmn(), 5);
-            $ranks = Point::tops(cy(), 'sum', 3);
-
-            foreach ($prixes as $i => $star) {
-                $star->assign_award($trophies[$i+2]);
-            }
-
-            foreach ($ranks as $i => $star) {
-                $star->assign_award($trophies[$i+7]);
-            }
-
-            Setting::next_month();
-
-            return redirect('prixes')->withMessage('Next month process completed.');
-
-        }else {
-            return back()->withError("Trophies Required : ". implode(',', $trophies))->withInput();
-        }
     }
 
     public function quick_plus(Request $request)
@@ -222,6 +175,7 @@ class GameController extends Controller
 
     public function prixes($year=null)
     {
+        $month = $year ? 12 : cm();
         $year = $year ?? cy();
 
         // grand prix result
@@ -255,7 +209,7 @@ class GameController extends Controller
 
         // get prixes with points
         $prxies = [];
-        for ($i=1; $i < cm() ; $i++) {
+        for ($i=1; $i <= $month ; $i++) {
             $prixes_list [mn($i)]= Point::tops($year, mn($i), 5);
         }
 
@@ -292,7 +246,12 @@ class GameController extends Controller
 
     public function random($tops=null)
     {
-        $star = Star::get_random($tops);
+        $filters = request('filters');
+        $filtered_stars = $filters ? explode(',', $filters) : [];
+        do {
+            $star = Star::get_random($tops);
+        }while( in_array($star->name, $filtered_stars) );
+
         return $star->name;
     }
 
