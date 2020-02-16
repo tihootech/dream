@@ -173,7 +173,7 @@ class GameController extends Controller
         if (base_point_exists('master')) {
             $request->validate([
                 'star' => 'exists:stars,name',
-                'degree' => 'numeric|min:1|max:10',
+                'degree' => 'numeric|min:1|max:100',
             ]);
             $star = Star::where('name', $request->star)->first();
             Master::make($star->id, $request->degree);
